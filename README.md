@@ -34,7 +34,7 @@ npm install
 
 ### Archivos de configuración.
 
-Crear los archivos de configuración con base en los archivos `sample` y modificar los valores que sean necesarios.
+Crear los archivos de configuración con base en los archivos `sample` y modificar los valores que sean necesarios, codigo valido solo en linux.
 
 ```bash
 # Variables de entorno globales
