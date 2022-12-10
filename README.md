@@ -1,3 +1,5 @@
+# Proyecto Base Backend - Manual de instalación para entornos de desarrollo
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -5,69 +7,99 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## 1. Requerimientos
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+| Nombre       | Versión | Descripción                                            | Instalación                                      |
+|--------------|---------|--------------------------------------------------------|--------------------------------------------------|
+| `PostgreSQL` | ^15     | Gestor de base de datos.                               | https://www.enterprisedb.com/downloads/postgres-postgresql-downloads |
+| `NodeJS`     | ^14.6.0     | Entorno de programación de JavaScript.                 | `nvm install 14` https://github.com/nvm-sh/nvm   |
+| `NPM`        | ^9      | Gestor de paquetes de NodeJS.                          | `npm install -g npm@latest`                       |
 
-## Installation
+
+## 2. Instalación
+
+### Clonación del proyecto e instalación de dependencias
 
 ```bash
-$ npm install
+# Clonación del proyecto
+git clone https://github.com/Takirrod/trazo-backend.git
+
+# Ingresamos dentro de la carpeta del proyecto
+cd trazo-backend
+
+# Instalamos dependencias
+npm install
 ```
 
-## Running the app
+### Archivos de configuración.
+
+Crear los archivos de configuración con base en los archivos `sample` y modificar los valores que sean necesarios.
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# Variables de entorno globales
+cp .env.sample .env
 ```
 
-## Test
+## Creación y configuración de la Base de Datos
 
 ```bash
-# unit tests
-$ npm run test
+# Crear una base de datos, se recomienda el nombre de database_db para evitar cambios en las variables de entorno:
+create database database_db;
 
-# e2e tests
-$ npm run test:e2e
+# Seleccion de la base de datos creada:
+\c database_db;
 
-# test coverage
-$ npm run test:cov
+# Crear los siguientes esquemas de base de datos:
+create schema usuarios;
+create schema trazos;
+create schema guardados;
+
+# Configura la base de datos.
+npm run setup
 ```
 
-## Support
+## Despliegue de la aplicación
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+# Ejecución en modo desarrollo (live-reload)
+npm run start:dev
+```
 
-## Stay in touch
+## Variables de entorno
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**Datos de despliegue**
 
-## License
+| Variable   | Valor por defecto | Descripción                                  |
+|------------|-------------------|----------------------------------------------                    |
+| `PORT`     | `3000`            | Puerto en el que se levantará la aplicación. |
 
-Nest is [MIT licensed](LICENSE).
+\*\*\* La URL de despliegue sería: `http://localhost:3000/api`
+
+**Configuración de la base de datos**
+
+| Variable                 | Valor por defecto | Descripción                                                                                       |
+|--------------------------|-------------------|---------------------------------------------------------------------------------------------------|
+| `DB_HOST`                | `localhost`       | Host de la base de datos.                                                                         |
+| `DB_USERNAME`            | `postgres`        | nombre de usuario de la base de datos.                                                            |
+| `DB_PASSWORD`            | `postgres`        | contraseña de la base de datos.                                                                   |
+| `DB_DATABASE`            | `database_db`     | nombre de la base de datos.                                                                       |
+| `DB_PORT`                | `5432`            | puerto de despliegue de la base de datos.                                                         |
+| `DB_SCHEMA_USUARIOS`     | `usuarios`        | Utilizado para almacenar la tabla usuarios, roles y todo lo relacionado con la autenticación.     |
+| `DB_SCHEMA_TRAZOS` | `trazos`    | Utilizado para almacenar tablas relacionadas a los trazos como trazo y paso.                                             |
+| `DB_SCHEMA_GUARDADOS` | `guardados`    | Utilizado para almanecar tablas de tipo guardado, que son los datos guardados.                                             |
+
+**Configuración para módulo de autenticación**
+
+| Variable                   | Valor por defecto | Descripción                                                                             |
+|----------------------------|-------------------|-----------------------------------------------------------------------------------------|
+| `JWT_SECRET`               |                   | Llave para generar los tokens de autorización. Genera una llave fuerte para producción. |
+| `JWT_EXPIRES_IN`           |                   | Tiempo de expiración del token de autorización en milisegundos.                         |
+| `TRAZO_SESSION_SECRET`           |                   | Clave secreta para la generacion de la sesion.                         |
+
+
+**Configuración para el servicio de autenticacion de Google**
+
+| Variable    | Valor por defecto | Descripción                                                       |
+|-------------|-------------------|-------------------------------------------------------------------|
+| `GOOGLE_CLIENT_ID`   |                   | ID del cliente de identificacion para la autenticacion de Google.   |
