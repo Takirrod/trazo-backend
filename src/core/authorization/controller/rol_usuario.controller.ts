@@ -1,6 +1,5 @@
-import { Controller, Post, UseGuards, Body } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body, Put } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Rol } from 'src/application/rol/entity/rol.entity';
 import { JwtAuthGuard } from 'src/core/authentication/guard/jwt-auth.guard';
 import { RolUsuarioService } from '../service/rol_usuario.service';
 
@@ -12,8 +11,9 @@ export class RolUsuarioController {
   ){}
 
   @UseGuards(JwtAuthGuard)
-  @Post()
-  async createUsuarioRol(@Body() body): Promise<Rol[]>{
-    return await this.rolUsuarioService.saveRolUser(body.userId, body.rol);
+  @Put('update')
+  async deleteRolesUsuario(@Body() body){
+    return this.rolUsuarioService.updateRolUsuario(body.idUsuario, body.roles);
   }
+
 }
