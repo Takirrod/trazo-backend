@@ -10,15 +10,15 @@ export class RolController {
     private readonly rolService: RolService
   ) { }
 
-  @Get('all')
-  async getAllRoles() {
-    return await this.rolService.getAllRoles()
-  }
-
-  @UseGuards(AuthGuard('jwt'), JwtAuthGuard)
   @Get('public')
   async getPublicRoles() {
     return await this.rolService.getAllPublicRoles()
+  }
+
+  @UseGuards(AuthGuard('jwt'), JwtAuthGuard)
+  @Get('all')
+  async getAllRoles() {
+    return await this.rolService.getAllRoles()
   }
 
   @UseGuards(AuthGuard('jwt'), JwtAuthGuard)
