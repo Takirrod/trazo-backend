@@ -1,5 +1,6 @@
 import { Body, Get, Post, UseGuards } from '@nestjs/common';
 import { Controller } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { Rol } from 'src/application/rol/entity/rol.entity';
 import { RolService } from 'src/application/rol/service/rol.service';
 import { RegisterDto } from 'src/application/usuario/dto/register.dto';
@@ -10,6 +11,7 @@ import { GoogleOauthGuard } from '../guard/google-oauth.guard';
 import { AuthenticationService } from '../service/authentication.service';
 
 @Controller('auth')
+@UseGuards(AuthGuard('jwt'))
 export class AuthController {
   constructor(
     private usuarioService: UsuarioService,
