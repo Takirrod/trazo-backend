@@ -1,4 +1,4 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Inject, Injectable } from '@nestjs/common';
 import { Rol } from 'src/application/rol/entity/rol.entity';
 import { RolRepository } from 'src/application/rol/repository/rol.repository';
 import { DataSource } from 'typeorm';
@@ -52,7 +52,9 @@ export class RolUsuarioService {
             if(allRoles.includes(rol)){
               return await queryRunner.manager.save(RolUsuario, {idRol: rol, idUsuario: userId})
             }
-            throw Error('No existe rol');
+            throw new BadRequestException(
+              `No existe rol mencionado`
+            )
           }else{
             control.splice(control.indexOf(rol, 0), 1);
             return
