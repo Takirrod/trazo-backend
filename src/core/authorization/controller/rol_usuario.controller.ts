@@ -12,7 +12,7 @@ export class RolUsuarioController {
 
   @UseGuards(JwtAuthGuard)
   @Put('update')
-  async deleteRolesUsuario(@Body() body){
+  async updateRolesUsuario(@Body() body){
     return this.rolUsuarioService.updateRolUsuario(body.idUsuario, body.roles);
   }
 

@@ -9,7 +9,6 @@ import { AuthGuard } from '@nestjs/passport';
 dotenv.config();
 
 @Controller('user')
-@UseGuards(AuthGuard('jwt'))
 export class UsuarioController {
   constructor(
     private usuarioService: UsuarioService,
@@ -20,7 +19,7 @@ export class UsuarioController {
     return await this.usuarioService.getUserByEmail(email)
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard('jwt'), JwtAuthGuard)
   @Delete(':id')
   async removeUser(@Param('id') userId: number){
     return this.usuarioService.deleteUser(userId)
