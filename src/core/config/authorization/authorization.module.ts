@@ -24,7 +24,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
             synchronize: false,
           })
           const enforcer = await newEnforcer(
-            join(__dirname.replace('\\dist', ''), 'model.conf'),
+            join(__dirname.replace('\\dist', '').replace('/dist', ''), 'model.conf'),
             adapter
           )
           enforcer.enableLog(false)
