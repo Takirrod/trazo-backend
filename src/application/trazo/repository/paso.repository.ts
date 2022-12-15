@@ -30,10 +30,6 @@ export class PasoRepository {
     return await this.dataSource.getRepository(Paso).update(partialPaso.id, partialPaso);
   }
 
-  async deletePaso(idPaso: number){
-    return await this.dataSource.getRepository(Paso).delete(idPaso);
-  }
-
   async createPaso(paso: Paso){
     return await this.dataSource.getRepository(Paso).save(paso);
   }

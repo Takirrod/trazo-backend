@@ -17,7 +17,22 @@ export class PasoService {
   }
 
   async deletePasoById(idPaso: number){
-    const response = await this.pasoRepository.deletePaso(idPaso);
+    const queryRunner = this.dataSource.createQueryRunner()
+    await queryRunner.connect()
+    await queryRunner.startTransaction()
+    let response;
+    try{
+      response = queryRunner.manager.delete(Paso, idPaso)
+      const paso = await queryRunner.manager.findOne(Paso, {where: {id: idPaso}})
+      const trazo = await queryRunner.manager.findOne(Trazo, {where: {id: paso.idTrazo}});
+      queryRunner.manager.update(Trazo, trazo.id, {cantidadPasos: trazo.cantidadPasos - 1});
+      await queryRunner.commitTransaction()
+    }catch (err) {
+      await queryRunner.rollbackTransaction()
+      throw err
+    } finally {
+      await queryRunner.release()
+    }
     if(response.affected === 0){
       return {
         "mensaje": "No se encontro el paso a borrar"
