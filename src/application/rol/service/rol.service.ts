@@ -42,7 +42,7 @@ export class RolService {
   }
 
   async getAllPublicRoles(){
-    return await this.rolRepository.findPublicRoles()
+    return await (await this.rolRepository.findPublicRoles()).filter(rol => rol.nombre != 'USUARIO')
   }
 
   async updateRol(partialRol: Partial<Rol>){
