@@ -30,11 +30,23 @@ export class seeds1670550066906 implements MigrationInterface {
       {encoding: 'utf-8'}
     )
 
+    const queriesTrazoGuardado = await fs.readFileSync(
+      __dirname + '/trazo_guardado.sql',
+      {encoding: 'utf-8'}
+    )
+
+    const queriesPasoGuardado = await fs.readFileSync(
+      __dirname + '/paso_guardado.sql',
+      {encoding: 'utf-8'}
+    )
+
     await queryRunner.query(queriesUsuario.toString())
     await queryRunner.query(queriesRol.toString())
     await queryRunner.query(queriesRolUsuario.toString())
     await queryRunner.query(queriesTrazo.toString())
     await queryRunner.query(queriesPaso.toString())
+    await queryRunner.query(queriesTrazoGuardado.toString())
+    await queryRunner.query(queriesPasoGuardado.toString())
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> { }

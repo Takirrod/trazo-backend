@@ -26,11 +26,11 @@ export class PasoGuardado extends BaseEntity {
     @Column("integer", { name: "paso_numero" })
     pasoNumero: number;
 
-    @Column("integer", {name: "id_rol"})
+    @Column("integer", {name: "id_rol", nullable: true})
     idRol: number;
 
     @ManyToOne(() => Rol, (rol) => rol.pasoGuardado,{
-        nullable: false
+        nullable: true
     })
     @JoinColumn([{name: "id_rol", referencedColumnName: "id"}])
     rol: Rol;
