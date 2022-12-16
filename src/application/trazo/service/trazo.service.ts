@@ -51,7 +51,9 @@ export class TrazoService {
     try{
       trazo.pasoActual = 1;
       trazo.cantidadPasos = trazo.paso.length;
-      trazo.idUsuario = idUsuario;
+      if(trazo.idUsuario === undefined){
+        trazo.idUsuario = idUsuario;
+      }
       newTrazo = await queryRunner.manager.save(Trazo, trazo);
 
       await Promise.all(
