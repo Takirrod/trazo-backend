@@ -13,4 +13,8 @@ export class UsuarioRepository {
   async findByEmail(email: string): Promise<Usuario>{
     return await this.dataSource.getRepository(Usuario).findOneBy({email: email});
   }
+
+  async findAllUsers(): Promise<Usuario[]>{
+    return await this.dataSource.getRepository(Usuario).find();
+  }
 }

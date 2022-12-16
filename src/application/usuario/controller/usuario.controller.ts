@@ -24,4 +24,10 @@ export class UsuarioController {
   async removeUser(@Param('id') userId: number){
     return this.usuarioService.deleteUser(userId)
   }
+
+  @UseGuards(AuthGuard('jwt'), JwtAuthGuard)
+  @Get('all')
+  async getAllUsers(){
+    return await this.usuarioService.getAllUsers();
+  }
 }

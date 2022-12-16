@@ -106,4 +106,8 @@ export class UsuarioService {
       }
     }
   }
+
+  async getAllUsers(){
+    return await this.usuarioRepository.findAllUsers();
+  }
 }
