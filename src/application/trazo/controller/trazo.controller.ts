@@ -28,8 +28,9 @@ export class TrazoController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  async saveTrazo(@Body() body: Partial<Trazo>): Promise<Trazo>{
-    return this.trazoService.saveTrazo(body)
+  async saveTrazo(@Req()req, @Body() body: Partial<Trazo>): Promise<Trazo>{
+    const user = req.user;
+    return this.trazoService.saveTrazo(body, user.id)
   }
 
   @UseGuards(JwtAuthGuard)

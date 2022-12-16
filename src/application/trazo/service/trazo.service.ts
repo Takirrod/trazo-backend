@@ -43,7 +43,7 @@ export class TrazoService {
     return await this.trazoRepository.findTrazosByState(terminado)
   }
 
-  async saveTrazo(trazo: Partial<Trazo>): Promise<Trazo>{
+  async saveTrazo(trazo: Partial<Trazo>, idUsuario: number): Promise<Trazo>{
     const queryRunner = this.dataSource.createQueryRunner()
     await queryRunner.connect()
     await queryRunner.startTransaction()
@@ -51,6 +51,7 @@ export class TrazoService {
     try{
       trazo.pasoActual = 1;
       trazo.cantidadPasos = trazo.paso.length;
+      trazo.idUsuario = idUsuario;
       newTrazo = await queryRunner.manager.save(Trazo, trazo);
 
       await Promise.all(
