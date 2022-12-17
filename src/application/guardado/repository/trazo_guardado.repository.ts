@@ -15,7 +15,7 @@ export class TrazoGuardadoRepository {
     .leftJoinAndSelect('trazoGuardado.pasoGuardado', 'pasoGuardado')
     .select([
       'trazoGuardado',
-      'pasoGuardado.nombre'
+      'pasoGuardado'
     ]);
 
     return await query.getMany()

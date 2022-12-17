@@ -10,24 +10,9 @@ export class TrazoGuardadoService {
     private trazoGuardadoRepository: TrazoGuardadoRepository
   ){}
 
-  async getAllTrazosGuardados(): Promise<TrazoGuardadoDto[]>{
+  async getAllTrazosGuardados(): Promise<TrazoGuardado[]>{
     const trazos: TrazoGuardado[] = await this.trazoGuardadoRepository.findAllTrazosGuardados()
-    const trazosGuardados: TrazoGuardadoDto[] = trazos.map(trazo => {
-      const trazoGuardado: TrazoGuardadoDto ={
-        id: 0,
-        numeroPasos: 0,
-        descripcion: '',
-        nombre: '',
-        nombrePasos: [],
-      }
-      trazoGuardado.id = trazo.id;
-      trazoGuardado.numeroPasos = trazo.cantidadPasos;
-      trazoGuardado.descripcion = trazo.descripcion;
-      trazoGuardado.nombre = trazo.nombre;
-      trazoGuardado.nombrePasos = trazo.pasoGuardado.map(pasoGuardado => pasoGuardado.nombre);
-      return trazoGuardado;
-    })
-    return trazosGuardados;
+    return trazos;
   }
 
   async getSpecificTrazo(idTrazoGuardado){
