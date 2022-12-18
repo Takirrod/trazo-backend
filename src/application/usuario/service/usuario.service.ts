@@ -110,4 +110,8 @@ export class UsuarioService {
   async getAllUsers(){
     return await this.usuarioRepository.findAllUsers();
   }
+
+  async searchUsersByWord(word: string){
+    return await this.usuarioRepository.findUserByWord(word);
+  }
 }

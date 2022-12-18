@@ -30,4 +30,10 @@ export class UsuarioController {
   async getAllUsers(){
     return await this.usuarioService.getAllUsers();
   }
+
+  @UseGuards(AuthGuard('jwt'), JwtAuthGuard)
+  @Get()
+  async getUserByWord(@Query("search") word: string){
+    return await this.usuarioService.searchUsersByWord(word);
+  }
 }
