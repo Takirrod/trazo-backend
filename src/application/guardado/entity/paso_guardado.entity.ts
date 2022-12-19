@@ -9,6 +9,7 @@ import {
 import { Rol } from "../../rol/entity/rol.entity";
 import { TrazoGuardado } from "./trazo_guardado.entity";
 import * as dotenv from 'dotenv'
+import { Usuario } from "src/application/usuario/entity/usuario.entity";
 
 dotenv.config()
 
@@ -43,4 +44,13 @@ export class PasoGuardado extends BaseEntity {
     })
     @JoinColumn([{name: "id_trazo_guardado", referencedColumnName: "id"}])
     trazoGuardado: TrazoGuardado;
+
+    @Column("integer", {name: "id_usuario", nullable: true})
+    idUsuario: number;
+
+    @ManyToOne(() => Usuario, (usuario) => usuario.paso,{
+        nullable: false
+    })
+    @JoinColumn([{name: "id_usuario", referencedColumnName: "id"}])
+    usuario: Usuario;
 }

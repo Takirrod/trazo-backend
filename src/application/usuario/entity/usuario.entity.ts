@@ -9,6 +9,7 @@ import { Paso } from "../../trazo/entity/paso.entity";
 import { RolUsuario } from "../../../core/authorization/entity/rol_usuario.entity";
 import { Trazo } from "../../trazo/entity/trazo.entity";
 import * as dotenv from 'dotenv'
+import { PasoGuardado } from "src/application/guardado/entity/paso_guardado.entity";
 
 dotenv.config()
 
@@ -55,6 +56,12 @@ export class Usuario extends BaseEntity {
     (paso) => paso.usuario
   )
   paso: Paso[]
+
+  @OneToMany(
+    () => PasoGuardado,
+    (paso) => paso.usuario
+  )
+  pasoGuardado: PasoGuardado[]
 
   constructor(data?: Partial<Usuario>) {
     super()
