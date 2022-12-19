@@ -32,4 +32,8 @@ export class TrazoGuardadoRepository {
       'pasoGuardado'
     ]).getOne();
   }
+
+  async updateTrazoGuardado(partialTrazo: Partial<TrazoGuardado>){
+    return await this.dataSource.getRepository(TrazoGuardado).update(partialTrazo.id, partialTrazo);
+  }
 }

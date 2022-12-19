@@ -105,11 +105,11 @@ export class TrazoService {
     }
     if(response.affected === 0){
       return {
-        "mensaje": "No se encontro el rol a borrar"
+        "mensaje": "No se encontro el trazo a borrar"
       }
     }else{
       return {
-        "mensaje": `Se elimino ${response.affected} rol(es) correctamente`
+        "mensaje": `Se elimino ${response.affected} trazo(s) correctamente`
       }
     }
   }
