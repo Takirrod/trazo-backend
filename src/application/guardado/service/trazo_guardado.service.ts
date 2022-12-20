@@ -102,7 +102,11 @@ export class TrazoGuardadoService {
       response = queryRunner.manager.delete(PasoGuardado, idPaso)
       const paso = await queryRunner.manager.findOne(PasoGuardado, {where: {id: idPaso}})
       const trazo = await queryRunner.manager.findOne(TrazoGuardado, {where: {id: paso.idTrazoGuardado}});
-      queryRunner.manager.update(TrazoGuardado, trazo.id, {cantidadPasos: trazo.cantidadPasos - 1});
+      if(trazo.cantidadPasos-1 === 0){
+        await queryRunner.manager.delete(TrazoGuardado, trazo.id);
+      }else{
+        await queryRunner.manager.update(TrazoGuardado, trazo.id, {cantidadPasos: trazo.cantidadPasos - 1});
+      }
       await queryRunner.commitTransaction()
     }catch (err) {
       await queryRunner.rollbackTransaction()
