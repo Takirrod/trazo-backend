@@ -9,6 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "setup": "npm run migrations:clean && npm run schema:drop && npm run migrations:generate database/migrations/init && npm run migrations:run && npm run seeds:run",
+    "init:database": "npm run migrations:clean && npm run schema:drop && npm run migrations:generate database/migrations/init && npm run migrations:run && npm run initial-seeds:run",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -24,8 +25,10 @@
     "migrations:generate": "npm run typeorm -- migration:generate -d ormconfig-default.ts",
     "migrations:run": "npm run typeorm -- migration:run -d ormconfig-default.ts",
     "migrations:clean": "rimraf database/migrations/*",
+    "seeds:create": "npm run typeorm -- migration:create",
     "schema:drop": "npm run typeorm -- schema:drop -d ormconfig-default.ts",
-    "seeds:run": "npm run typeorm -- migration:run -d ormconfig-seed.ts"
+    "seeds:run": "npm run typeorm -- migration:run -d ormconfig-seed.ts",
+    "initial-seeds:run": "npm run typeorm -- migration:run -d ormconfig-initial-seeds.ts"
   },
   "dependencies": {
     "@nestjs/common": "9.2.0",
