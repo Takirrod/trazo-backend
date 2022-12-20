@@ -45,7 +45,29 @@ export class PasoService {
   }
 
   async updatePaso(partialPaso: Partial<Paso>){
-    const response = await this.pasoRepository.updatePaso(partialPaso)
+    let response;
+    const queryRunner = this.dataSource.createQueryRunner()
+    await queryRunner.connect()
+    await queryRunner.startTransaction()
+    try{
+      response = await queryRunner.manager.update(Paso, partialPaso.id, partialPaso);
+      const trazo: Trazo = await queryRunner.manager.getRepository(Trazo)
+      .createQueryBuilder("trazo")
+      .where("trazo.id = :id", {id: partialPaso.idTrazo})
+      .select([
+        "trazo"
+      ]).getOne();
+      if(trazo.cantidadPasos === partialPaso.pasoNumero){
+        trazo.estaTerminado = true;
+        await queryRunner.manager.update(Trazo, trazo.id, trazo)
+      }
+      await queryRunner.commitTransaction()
+    }catch (err) {
+      await queryRunner.rollbackTransaction()
+      throw err
+    } finally {
+      await queryRunner.release()
+    }
     if(response.affected === 0){
       return {
         "mensaje": "No se actualizo ningun paso"
