@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
+import { PasoGuardado } from '../entity/paso_guardado.entity';
 import { TrazoGuardado } from '../entity/trazo_guardado.entity';
 
 @Injectable()
@@ -35,5 +36,16 @@ export class TrazoGuardadoRepository {
 
   async updateTrazoGuardado(partialTrazo: Partial<TrazoGuardado>){
     return await this.dataSource.getRepository(TrazoGuardado).update(partialTrazo.id, partialTrazo);
+  }
+
+
+
+  async findPasosByTrazoId(trazoId): Promise<PasoGuardado[]>{
+    const query = this.dataSource.getRepository(PasoGuardado)
+    .createQueryBuilder('paso')
+    .where('paso.idTrazo = :trazoId', {trazoId: trazoId})
+    .select('paso')
+
+    return await query.getMany()
   }
 }
