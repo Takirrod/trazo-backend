@@ -21,6 +21,7 @@ export class TrazoRepository {
       'trazo.descripcion',
       'trazo.cantidadPasos',
       'trazo.pasoActual',
+      'trazo.estaTerminado',
       'paso.nombre'
     ])
 

@@ -5,4 +5,5 @@ export class TrazoHomeDto{
 	cantidadPasos: number;
 	pasoActual: number;
 	nombrePasos: string[];
+	estaTerminado: boolean;
 }

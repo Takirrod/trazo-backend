@@ -22,7 +22,8 @@ export class TrazoService {
         descripcion: '',
         nombre: '',
         nombrePasos: [],
-        pasoActual: 0
+        pasoActual: 0,
+        estaTerminado: false
       }
       trazoHome.id = trazo.id;
       trazoHome.cantidadPasos = trazo.cantidadPasos;
@@ -30,6 +31,7 @@ export class TrazoService {
       trazoHome.nombre = trazo.nombre;
       trazoHome.nombrePasos = trazo.paso.map(paso => paso.nombre);
       trazoHome.pasoActual = trazo.pasoActual;
+      trazoHome.estaTerminado = trazo.estaTerminado;
       return trazoHome;
     })
     return trazosHome;
