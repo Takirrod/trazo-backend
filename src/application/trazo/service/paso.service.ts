@@ -57,10 +57,24 @@ export class PasoService {
       .select([
         "trazo"
       ]).getOne();
+      const pasos = await queryRunner.manager.getRepository(Paso)
+      .createQueryBuilder("paso")
+      .where("paso.idTrazo = :id", {id: partialPaso.idTrazo})
+      .select([
+        "paso"
+      ]).orderBy("paso.pasoNumero", "ASC")
+      .getMany();
+      
+      for(let i = 0; i < pasos.length; i++){
+        if(pasos[i].estaTerminado === false){
+          trazo.pasoActual = pasos[i].pasoNumero;
+          break;
+        }
+      }
       if(trazo.cantidadPasos === partialPaso.pasoNumero){
         trazo.estaTerminado = true;
-        await queryRunner.manager.update(Trazo, trazo.id, trazo)
       }
+      await queryRunner.manager.update(Trazo, trazo.id, trazo)
       await queryRunner.commitTransaction()
     }catch (err) {
       await queryRunner.rollbackTransaction()
@@ -92,6 +106,23 @@ export class PasoService {
           return response
         })
       )
+
+      const trazo: Trazo = await queryRunner.manager.getRepository(Trazo)
+      .createQueryBuilder("trazo")
+      .where("trazo.id = :id", {id: pasos[0].idTrazo})
+      .select([
+        "trazo"
+      ]).getOne();
+
+      for(let i = 0; i < pasos.length; i++){
+        if(pasos[i].estaTerminado === false){
+          trazo.pasoActual = pasos[i].pasoNumero;
+          break;
+        }
+      }
+
+      await queryRunner.manager.update(Trazo, trazo.id, trazo)
+
       await queryRunner.commitTransaction()
     }catch (err) {
       await queryRunner.rollbackTransaction()
