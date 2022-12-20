@@ -36,7 +36,8 @@ export class TrazoRepository {
     .select([
       'trazo',
       'paso'
-    ]);
+    ])
+    .orderBy("paso.pasoNumero", "ASC");
 
     return await query.getOne();
   }
