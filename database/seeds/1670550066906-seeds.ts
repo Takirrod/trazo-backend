@@ -40,6 +40,11 @@ export class seeds1670550066906 implements MigrationInterface {
       {encoding: 'utf-8'}
     )
 
+    const queriesCasbin = await fs.readFileSync(
+      __dirname + '/casbin.sql',
+      {encoding: 'utf-8'}
+    )
+
     await queryRunner.query(queriesUsuario.toString())
     await queryRunner.query(queriesRol.toString())
     await queryRunner.query(queriesRolUsuario.toString())
@@ -47,6 +52,7 @@ export class seeds1670550066906 implements MigrationInterface {
     await queryRunner.query(queriesPaso.toString())
     await queryRunner.query(queriesTrazoGuardado.toString())
     await queryRunner.query(queriesPasoGuardado.toString())
+    await queryRunner.query(queriesCasbin.toString())
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> { }
