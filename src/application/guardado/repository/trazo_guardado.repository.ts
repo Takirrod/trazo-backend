@@ -17,7 +17,8 @@ export class TrazoGuardadoRepository {
     .select([
       'trazoGuardado',
       'pasoGuardado'
-    ]);
+    ])
+    .orderBy('pasoGuardado.pasoNumero', "ASC");
 
     return await query.getMany()
   }
@@ -42,9 +43,10 @@ export class TrazoGuardadoRepository {
 
   async findPasosByTrazoId(trazoId): Promise<PasoGuardado[]>{
     const query = this.dataSource.getRepository(PasoGuardado)
-    .createQueryBuilder('paso')
-    .where('paso.idTrazo = :trazoId', {trazoId: trazoId})
-    .select('paso')
+    .createQueryBuilder('pasoGuardado')
+    .where('pasoGuardado.idTrazoGuardado = :trazoId', {trazoId: trazoId})
+    .select('pasoGuardado')
+    .orderBy('pasoGuardado.pasoNumero', "ASC");
 
     return await query.getMany()
   }
