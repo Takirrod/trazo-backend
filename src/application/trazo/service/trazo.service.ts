@@ -56,9 +56,9 @@ export class TrazoService {
       if(trazo.idUsuario === undefined){
         trazo.idUsuario = idUsuario;
       }
-      if(!trazo.idRol){
-        trazo.idUsuario = null;
-      }
+      // if(!trazo.idRol){
+      //   trazo.idUsuario = null;
+      // }
       newTrazo = await queryRunner.manager.save(Trazo, trazo);
 
       await Promise.all(
